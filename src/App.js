@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+import { Firebase } from './firebase/config';
+import { getFirestore, collection, deleteDoc,updateDoc, doc } from 'firebase/firestore';
 import './App.css';
 
 function App() {
+  const handleClick = async () => {
+    const firestore = getFirestore(Firebase);
+    const collectionRef = collection(firestore, 'product');
+
+    try {
+      const updatedData = { price: 15000 };
+      await updateDoc(doc(collectionRef, 'NG4Z9dBWAoswMCRzZykm'), updatedData);
+      console.log('Document updated successfully!');
+    } catch (error) {
+      console.error('Error adding document: ', error);
+    }
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={handleClick}>Click Me</button>
     </div>
   );
 }
